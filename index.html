@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>M-Track</title>
+
+    <!-- Framework & icon -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+
+    <!-- css -->
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Javascript -->
+    <script type = "text/javascript" src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.rawgit.com/Keyang/node-csvtojson/d41f44aa/browser/csvtojson.min.js"></script>
+
+  </head>
+  <body>
+
+    <section id="header">
+        <div class="jumbotron">
+            <div class="container">
+                <h4 class="pt-4 pb-3"><i class="bi bi-person"></i> Hi, Faaris M, <span id="tanggalwaktu"></span></h4>
+                <div class="card text-white" data-bs-toggle="modal" data-bs-target="#update">
+                    <div class="card-body">
+                      <h5 class="card-title mb-4"><i class="bi bi-person"></i> My Account</h5>
+                      <h6 class="card-subtitle mb-1"><i class="bi bi-activity"></i> Balance :</h6>
+                      <span id="balance"></span>
+                      <div class="row mt-4">
+                        <div class="col-6">
+                            <h6 class="card-subtitle mb-1"><i class="bi bi-box-arrow-in-up"></i> Masuk :</h6>
+                            <span id="masuk"></span>
+                          </div>
+                          <div class="col-6">
+                            <h6 class="card-subtitle mb-1"><i class="bi bi-box-arrow-in-down"></i> Keluar :</h6>
+                            <span id="ditarik"></span>
+                          </div>
+                      </div>
+                      <h5 class="card-title mt-3 text-end fst-italic">VISA</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-5 pb-5" id="main">
+        <div class="text-center pt-1"><i class="bi bi-chevron-compact-up"></i></div>
+        <div class="container main mt-1">
+            <div class="card bg-p-blue card-main me-1" data-bs-toggle="modal" data-bs-target="#update-primary">
+                <div class="card-body">
+                  <h5 class="card-title">Primary</h5>
+                  <h6 class="card-subtitle mt-2">Used :</h6>
+                  <span id="primary"></span>
+                  <h6 class="card-subtitle mt-2">Limit : Rp 550.000</h6>
+                </div>
+            </div>
+            <div class="card bg-p-green card-main ms-1" data-bs-toggle="modal" data-bs-target="#update-s-primary">
+                <div class="card-body">
+                  <h5 class="card-title">Semi-Primary</h5>
+                  <h6 class="card-subtitle mt-2">Used :</h6>
+                  <span id="semi-primary"></span>
+                  <h6 class="card-subtitle mt-2">Limit : Rp 250.000</h6>
+                </div>
+            </div>
+        </div>
+        <div class="container main mt-2">
+            <div class="card bg-p-red card-main me-1" data-bs-toggle="modal" data-bs-target="#update-secondary">
+                <div class="card-body">
+                  <h5 class="card-title">Secondary</h5>
+                  <h6 class="card-subtitle mt-2">Used :</h6>
+                  <span id="secondary"></span>
+                  <h6 class="card-subtitle mt-2">Limit : Rp 150.000</h6>
+                </div>
+            </div>
+            <div class="card bg-p-grey card-main ms-1" data-bs-toggle="modal" data-bs-target="#manage">
+                <div class="card-body text-center my-3">
+                    <h1 class="display-2"><i class="bi bi-columns-gap"></i></h1>
+                    <h5 class="card-title">Manage</h5>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Transaksi -->
+    <div class="modal fade" id="update" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="updateLabel">Update</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <div class="alert alert-primary alert-dismissible fade show d-none alert-transaksi" role="alert">
+                <i class="bi bi-check-circle-fill"></i> <strong>Berhasil</strong>, silahkan refresh.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <form name="transaksi">
+                <label class="form-label">Masuk</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Rp</span>
+                    <input type="number" class="form-control" placeholder="100.000" aria-label="Username" aria-describedby="basic-addon1" name="masuk">
+                </div>
+                <label class="form-label">Keluar</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Rp</span>
+                    <input type="number" class="form-control" placeholder="100.000" aria-label="Username" aria-describedby="basic-addon1" name="ditarik">
+                </div>
+                <button type="submit" class="btn btn-primary mt-3 btn-kirim"><i class="bi bi-send"></i> Submit</button>
+				<button class="btn btn-primary btn-loading d-none mt-3" type="button" disabled>
+					<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+					Loading...
+				</button>
+                <button type="reset" class="btn btn-danger mt-3"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
+            </form>
+            </div>
+            <div class="modal-footer">
+                Uang masuk & keluar
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- modal-->
+    <div class="modal fade" id="update-primary" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="updateLabel">Update</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <div class="alert alert-primary alert-dismissible fade show d-none alert-data" role="alert">
+                <i class="bi bi-check-circle-fill"></i> <strong>Berhasil</strong>, silahkan refresh.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <form name="dataPenggunaan">
+                <label class="form-label">Nominal</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Rp</span>
+                    <input type="number" class="form-control" placeholder="18.000" name="primary">
+                </div>
+                <button type="submit" class="btn btn-primary mt-3 btn-kirim-data"><i class="bi bi-send"></i> Submit</button>
+				<button class="btn btn-primary btn-loading-data d-none mt-3" type="button" disabled>
+					<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+					Loading...
+				</button>
+                <button type="reset" class="btn btn-danger mt-3"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
+            </form>
+            </div>
+            <div class="modal-footer">
+                Kebutuhan pokok & Kesehatan
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- modal 2-->
+    <div class="modal fade" id="update-s-primary" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="updateLabel">Update</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <div class="alert alert-primary alert-dismissible fade show d-none alert-data2" role="alert">
+                <i class="bi bi-check-circle-fill"></i> <strong>Berhasil</strong>, silahkan refresh.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <form name="dataPenggunaan2">
+                <label class="form-label">Nominal</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Rp</span>
+                    <input type="number" class="form-control" placeholder="60.000" name="semiPrimary">
+                </div>
+                <label class="form-label">Item</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Rp</span>
+                    <input type="text" class="form-control" placeholder="kuota internet" name="keteranganSemiPrimary">
+                </div>
+                <button type="submit" class="btn btn-primary mt-3 btn-kirim-data2"><i class="bi bi-send"></i> Submit</button>
+				<button class="btn btn-primary btn-loading-data2 d-none mt-3" type="button" disabled>
+					<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+					Loading...
+				</button>
+                <button type="reset" class="btn btn-danger mt-3"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
+            </form>
+            </div>
+            <div class="modal-footer">
+                Air, Laundry, Internet, Operasional
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- modal 3-->
+    <div class="modal fade" id="update-secondary" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="updateLabel">Update</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <div class="alert alert-primary alert-dismissible fade show d-none alert-data3" role="alert">
+                <i class="bi bi-check-circle-fill"></i> <strong>Berhasil</strong>, silahkan refresh.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <form name="dataPenggunaan3">
+                <label class="form-label">Nominal</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Rp</span>
+                    <input type="number" class="form-control" placeholder="10.000" name="secondary">
+                </div>
+                <label class="form-label">Item</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Rp</span>
+                    <input type="text" class="form-control" placeholder="Tisue" name="keteranganSecondary">
+                </div>
+                <button type="submit" class="btn btn-primary mt-3 btn-kirim-data3"><i class="bi bi-send"></i> Submit</button>
+				<button class="btn btn-primary btn-loading-data3 d-none mt-3" type="button" disabled>
+					<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+					Loading...
+				</button>
+                <button type="reset" class="btn btn-danger mt-3"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
+            </form>
+            </div>
+            <div class="modal-footer">
+                Belanja, Rekreasi, Transportasi
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- modal 4-->
+    <div class="modal fade" id="manage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="manage">Manage</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h4>Grade 1 <span class="fs-6">(reset data kuantitatif)</span></h4>
+                <a href="https://docs.google.com/spreadsheets/d/1NiyHnLhArycWPhP4M5jU4QH5Rx_MoeS42pcdpga5OdM/edit#gid=0" class="btn btn-primary me-1">Transaksi</a>
+                <a href="https://docs.google.com/spreadsheets/d/1gHPzPHgpKcDW-5SayuVdHp8Y2eUqhP1h4AoNWq72uvw/edit#gid=0" class="btn btn-primary">Data Global</a>
+                <h4 class="mt-3">Grade 2 <span class="fs-6">(direset setiap bulan)</span></h4>
+                <a href="https://docs.google.com/spreadsheets/d/1J6LIwdhSUmZWiUTDFu3YwCk1XfibSoFHM2AoK2nQnyc/edit#gid=0" class="btn btn-primary me-1">Semi-primary</a>
+                <a href="https://docs.google.com/spreadsheets/d/1N-LjML4Nmn9KCImL5hEhm-VXPtgqx0XJxUeDwfxrjeY/edit#gid=0" class="btn btn-primary">Secondary</a>
+                <h4 class="mt-3">Grade 3</h4>
+                <a href="https://docs.google.com/spreadsheets/d/1slM_MDuSh9r8wLp5hRT6K4Vhr81noSOPJf_4_qhRXMM/edit#gid=0" class="btn btn-primary">Inventory</a>
+            </div>
+            <div class="modal-footer">
+                <p>Sel berwarna <button class="btn" style="background-color: #ff9900;"></button> dapat diubah nilainya</p>
+            </div>
+        </div>
+        </div>
+    </div>
+    
+    
+    <!-- bottom Navbar -->
+    <nav class="navbar fixed-bottom">
+        <div class="container">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <a href="index.html" class="col-3 col-md text-center nav-menu active">
+                        <button class="btn btn-light nav-icon my-auto">
+                            <i class="bi bi-house"></i>
+                        </button>
+                        <p class="nav-label">Home</p>
+                    </a>
+                    <a href="data.html" class="col-3 col-md text-center nav-menu">
+                        <button class="btn btn-light nav-icon my-auto">
+                            <i class="bi bi-clipboard2-data"></i>
+                        </button>
+                        <p class="nav-label">Data</p>
+                    </a>
+                    <a href="inventory.html" class="col-3 col-md text-center nav-menu">
+                        <button class="btn btn-light nav-icon my-auto">
+                            <i class="bi bi-inboxes"></i>
+                        </button>
+                        <p class="nav-label">Inventory</p>
+                    </a>
+                    <a href="list.html" class="col-3 col-md text-center nav-menu">
+                        <button class="btn btn-light nav-icon my-auto">
+                            <i class="bi bi-collection"></i>
+                        </button>
+                        <p class="nav-label">List</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- save google sheet transaksi-->
+	<script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxjyoiktYpSPQfEUbsrJxklaSjqfx8FZB2j2m7nWbr0LRd4ZUH1JaTqMTxrdK-RfBA/exec'
+        const form = document.forms['transaksi']
+        const btnKirim = document.querySelector('.btn-kirim');
+        const btnLoading = document.querySelector('.btn-loading');
+        const alertTransaksi = document.querySelector('.alert-transaksi');
+  
+        form.addEventListener('submit', e => {
+          e.preventDefault()
+          btnLoading.classList.toggle('d-none');
+          btnKirim.classList.toggle('d-none');
+          fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+              .then(response => {
+                  btnLoading.classList.toggle('d-none');
+                     btnKirim.classList.toggle('d-none');
+                     alertTransaksi.classList.toggle('d-none');
+                     form.reset();
+                  console.log('Success!', response)})
+              .catch(error => console.error('Error!', error.message))
+        })
+    </script>
+    <!-- akhir save to google sheet transaksi-->
+
+    <!-- save google sheet primary-->
+	<script>
+       const scriptURL1 = 'https://script.google.com/macros/s/AKfycbx00hdSlgRzifHnr-0AvP3vnnjr49VhqUJBqsm8OtsFs8YdQ3Yi0Pd_a0fVOFg1PrZD/exec'
+       const form1 = document.forms['dataPenggunaan']
+       const btnKirimData = document.querySelector('.btn-kirim-data');
+       const btnLoadingData = document.querySelector('.btn-loading-data');
+       const alertData = document.querySelector('.alert-data');
+   
+       form1.addEventListener('submit', e => {
+       e.preventDefault()
+       btnLoadingData.classList.toggle('d-none');
+       btnKirimData.classList.toggle('d-none');
+       fetch(scriptURL1, { method: 'POST', body: new FormData(form1)})
+           .then(response => {
+               btnLoadingData.classList.toggle('d-none');
+                  btnKirimData.classList.toggle('d-none');
+                  alertData.classList.toggle('d-none');
+                  form1.reset();
+               console.log('Success!', response)})
+           .catch(error => console.error('Error!', error.message))
+       })
+    </script>
+    <!-- akhir save to google sheet primary-->
+
+    <!-- save google sheet semi-primary-->
+	<script>
+        const scriptURL2 = 'https://script.google.com/macros/s/AKfycbx00hdSlgRzifHnr-0AvP3vnnjr49VhqUJBqsm8OtsFs8YdQ3Yi0Pd_a0fVOFg1PrZD/exec'
+        const scriptURL2P = 'https://script.google.com/macros/s/AKfycbz1QDef_uS3lS1yAvucPN3YLRJeCxSU20e_nBaZPB_JkZIBcf47jceARjtB34grLeSe/exec'
+        const form2 = document.forms['dataPenggunaan2']
+        const btnKirimData2 = document.querySelector('.btn-kirim-data2');
+        const btnLoadingData2 = document.querySelector('.btn-loading-data2');
+        const alertData2 = document.querySelector('.alert-data2');
+    
+        form2.addEventListener('submit', e => {
+        e.preventDefault()
+        btnLoadingData2.classList.toggle('d-none');
+        btnKirimData2.classList.toggle('d-none');
+        fetch(scriptURL2, { method: 'POST', body: new FormData(form2)})
+            .then(response => {
+                btnLoadingData2.classList.toggle('d-none');
+                   btnKirimData2.classList.toggle('d-none');
+                   alertData2.classList.toggle('d-none');
+                   form2.reset();
+                console.log('Success!', response)})
+            .catch(error => console.error('Error!', error.message))
+        });
+
+        form2.addEventListener('submit', e => {
+        e.preventDefault()
+        fetch(scriptURL2P, { method: 'POST', body: new FormData(form2)})
+            .then(response => {
+                console.log('Success!', response)})
+            .catch(error => console.error('Error!', error.message))
+        });
+     </script>
+     <!-- akhir save to google sheet semi-primary-->
+
+     <!-- save google sheet secondary-->
+	<script>
+        const scriptURL3 = 'https://script.google.com/macros/s/AKfycbx00hdSlgRzifHnr-0AvP3vnnjr49VhqUJBqsm8OtsFs8YdQ3Yi0Pd_a0fVOFg1PrZD/exec'
+        const scriptURL3P = 'https://script.google.com/macros/s/AKfycbyp49DjU47kx9wzs2VFTSsBILCG8OzFMSMUukY9bFABf7MOYRpXv3vIYELHz3Mb-1T3/exec'
+        const form3 = document.forms['dataPenggunaan3']
+        const btnKirimData3 = document.querySelector('.btn-kirim-data3');
+        const btnLoadingData3 = document.querySelector('.btn-loading-data3');
+        const alertData3 = document.querySelector('.alert-data3');
+    
+        form3.addEventListener('submit', e => {
+        e.preventDefault()
+        btnLoadingData3.classList.toggle('d-none');
+        btnKirimData3.classList.toggle('d-none');
+        fetch(scriptURL3, { method: 'POST', body: new FormData(form3)})
+            .then(response => {
+                btnLoadingData3.classList.toggle('d-none');
+                   btnKirimData3.classList.toggle('d-none');
+                   alertData3.classList.toggle('d-none');
+                   form3.reset();
+                console.log('Success!', response)})
+            .catch(error => console.error('Error!', error.message))
+        })
+
+        form3.addEventListener('submit', e => {
+        e.preventDefault()
+        fetch(scriptURL3P, { method: 'POST', body: new FormData(form3)})
+            .then(response => {
+                console.log('Success!', response)})
+            .catch(error => console.error('Error!', error.message))
+        });
+     </script>
+     <!-- akhir save to google sheet secondary-->
+
+    <!-- Sheet Display Transaksi-->
+    <script>
+        const URL = "https://docs.google.com/spreadsheets/d/1NiyHnLhArycWPhP4M5jU4QH5Rx_MoeS42pcdpga5OdM/export?format=csv"
+        const masuk = document.querySelector("#masuk");
+        const ditarik = document.querySelector("#ditarik");
+        const balance = document.querySelector("#balance");
+
+        // lakukan fetch terhadap url
+        fetch(URL).then(result => result.text()).then(function (csvtext) {
+            return csv().fromString(csvtext);
+        }).then(function (csv) {
+            csv.forEach(function (row) {
+                masuk.innerHTML += "<h5>" + row.totalMasuk + "</h5>";
+                ditarik.innerHTML += "<h5>" + row.totalDitarik + "</h5>";
+                balance.innerHTML += "<h1>" + row.balance + "</h1>";
+            });
+        });
+    </script>
+    <!-- Akhir sheet display Transaksi-->
+
+    <!-- sheet display data primary -->
+    <script>
+        const URL1 = "https://docs.google.com/spreadsheets/d/1gHPzPHgpKcDW-5SayuVdHp8Y2eUqhP1h4AoNWq72uvw/export?format=csv"
+        const primary = document.querySelector("#primary");
+        const semiPrimary = document.querySelector("#semi-primary");
+        const secondary = document.querySelector("#secondary");
+
+        // lakukan fetch terhadap url
+        fetch(URL1).then(result => result.text()).then(function (csvtext) {
+            return csv().fromString(csvtext);
+        }).then(function (csv) {
+            csv.forEach(function (row) {
+                primary.innerHTML += "<h4>"+ row.totalPrimary + "</h4>";
+                semiPrimary.innerHTML += "<h4>" + row.totalSemiPrimary + "</h4>";
+                secondary.innerHTML += "<h4>" + row.totalSecondary + "</h4>";
+            });
+        });
+    </script>
+    <!-- akhir sheet display data primary -->
+
+    <script>
+        var dt = new Date();
+        document.getElementById("tanggalwaktu").innerHTML = (("0"+dt.getDate()).slice(-2)) +"/"+ (("0"+(dt.getMonth()+1)).slice(-2)) +"/"+ (dt.getFullYear()) +" ";
+    </script>
+
+  </body>
+</html>

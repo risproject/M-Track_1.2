@@ -1,0 +1,50 @@
+.jumbotron .card {
+  border-radius: 20px;
+  background-image: url(../aset/gradient.jpg);
+  background-size: cover;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+}
+
+.btn {
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.modal-content {
+  border-radius: 20px;
+}
+
+.input-group-text,
+.form-control {
+  background-color: white;
+}
+.search{
+  border-radius: 20px;
+  border: none;
+}
+
+.main {
+  display: inline-flex;
+}
+
+.card-main {
+  width: 50%;
+  height: 150px;
+  border-radius: 15px;
+  border: none;
+}
+
+.bg-p-blue,
+.card-inventory {
+  background-color: #d4e1fe;
+}
+.bg-p-green {
+  background-color: #c8ecc9;
+}
+.bg-p-red {
+  background-color: #ffecd4;
+}
+.bg-p-grey {
+  background-color: #e6edef;
+}

@@ -1,0 +1,80 @@
+a {
+  text-decoration: none;
+  color: inherit;
+}
+a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+#header{
+  position: sticky;
+  top: 0px;
+}
+.jumbotron {
+	background-color: #e6edef;
+	background-size: cover;
+	height: 350px;
+	position: relative;
+  border-radius: 0 0 25px 25px;
+}
+#head{
+  border-radius: 25px;
+  margin: 5px;
+  padding: 10px 0 !important;
+  background-color: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(20px);
+  position: sticky;
+  top: 5px;
+  z-index: 2;
+}
+#head a{
+  background-color: #3382E2;
+  padding: 3px 10px 3px 10px;
+  margin-left: 2px;
+  border-radius: 20px;
+  color: #fff;
+}
+#main{
+  background-color: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(20px);
+  border-radius: 25px 25px 0 0;
+}
+
+/* navigation */
+.navbar {
+  background-color: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(20px);
+  padding: 12px 0 12px 0;
+}
+.nav-label {
+  display: none;
+  color: black;
+}
+.nav-menu:hover .nav-label,
+.active .nav-label {
+  display: block;
+  transform: translateY(-20px);
+  margin-bottom: -25px;
+}
+.nav-menu:hover .nav-icon,
+.active .nav-icon {
+  background-color: #3382E2 !important;
+  transition: 0.4s;
+  width: 48px;
+  height: 40px;
+  font-size: 18px;
+  transform: translateY(-20px);
+  color: white;
+}
+.nav-icon {
+  border: none;
+  color: inherit;
+  border-radius: 20px!important;
+  transition: 0.4s;
+  color: black;
+}
+
+.card {
+  border: none;
+  border-radius: 20px;
+}
