@@ -7,10 +7,10 @@
 }
 
 button:focus{
-  display: none;
+  border: none;
 }
 input:focus{
-  display: none;
+  border: none;
 }
 
 .btn {
